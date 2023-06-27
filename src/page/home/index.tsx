@@ -31,6 +31,17 @@ const Home = () => {
         }}> 
         Variable（动态高度）
       </NavLink>
+      <NavLink 
+        to="/variable1"    
+        style={({ isActive, isPending }) => {
+          return {
+            fontWeight: isActive ? "bold" : "",
+            color: isPending ? "red" : "white",
+            marginTop: 30
+          };
+        }}> 
+        VariablePage1（动态高度）
+      </NavLink>
     </header>
   </div>
   )

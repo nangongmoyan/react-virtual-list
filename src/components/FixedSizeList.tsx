@@ -1,5 +1,5 @@
 import React from "react";
-import { useRangeToRender } from "../hooks/useRangeToRender";
+import { useRangeForFixed } from "../hooks/useRangeForFixed";
 import { flushSync } from "react-dom";
 
 export interface FixedSizeListProps {
@@ -23,7 +23,7 @@ const FixedSizeList:React.FC<FixedSizeListProps> = ({children: Component,...prop
   /** 需要渲染的items */
   const items = []
 
-  const {startIndex, endIndex, setScrollTop } = useRangeToRender(props)
+  const {startIndex, endIndex, setScrollTop } = useRangeForFixed(props)
   /** 列表长度大于0，对每一项进行处理 */
   if(itemCount > 0){
     for(let i = startIndex; i< endIndex; i++){

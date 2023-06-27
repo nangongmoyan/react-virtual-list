@@ -4,8 +4,8 @@ import { getEndIndexForOffset } from "../utils/fixed/getEndIndexForOffset";
 import { FixedSizeListProps } from "../components/FixedSizeList";
 
 
-type RangeToRender = Omit<FixedSizeListProps,'children'>
-const useRangeToRender = ({itemSize, height, itemCount}:RangeToRender) => {
+type RangeForFixed = Omit<FixedSizeListProps,'children'>
+const useRangeForFixed = ({itemSize, height, itemCount}:RangeForFixed) => {
   const overscanCount = 2
 
   /** 滚动位置 */
@@ -27,4 +27,4 @@ const useRangeToRender = ({itemSize, height, itemCount}:RangeToRender) => {
   return { startIndex, endIndex, setScrollTop }
 }
 
-export { useRangeToRender }
+export { useRangeForFixed }

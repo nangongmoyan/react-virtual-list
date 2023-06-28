@@ -47,7 +47,7 @@ const VariablePage1 = () => {
       <p style={{textAlign:'center'}}>  列表项高度动态 - 虚拟列表实现</p>
       <VariableSizeList1
         ref={listRef}
-        containerHeight={300}
+        containerHeight={window.innerHeight}
         itemCount={list.length}
         getItemHeight={getHeight}
         itemData={list}

@@ -1,5 +1,5 @@
 import React from "react";
-import { FixedSizeList } from "../../components/FixedSizeList";
+import { FixedSizeList } from "react-window";
 import '../../styles.css'
 function Item({ style, index }:{style:React.CSSProperties, index:number}) {
   return (
@@ -16,16 +16,17 @@ function Item({ style, index }:{style:React.CSSProperties, index:number}) {
 }
 
 
-const Fixed = () => {
+const FixedForWindow = () => {
   const list = new Array(10000).fill(0).map((item, i) => i);
 
   return (
     <>
-      <p style={{textAlign:'center'}}>列表项高度固定 - 虚拟列表实现</p>
+      <p style={{textAlign:'center'}}>列表项高度固定 - react-window</p>
       <FixedSizeList
-        height={window.screen.availHeight}
+        height={window.innerHeight}
         itemCount={list.length}
         itemSize={50}
+        width={window.innerWidth}
       >
         {Item}
       </FixedSizeList>
@@ -33,4 +34,4 @@ const Fixed = () => {
   )
 }
 
-export { Fixed }
+export { FixedForWindow }

@@ -1,4 +1,4 @@
-import { InstanceProps , VariableSizeListProps} from "../../components/VariableSizeList";
+import { InstanceProps , VariableSizeListProps} from "../../components/VariableSizeList2";
 
 export function getItemMetadata (props: VariableSizeListProps, index: number, instanceProps: InstanceProps) {
 

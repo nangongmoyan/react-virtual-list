@@ -1,110 +1,87 @@
-import React, { useMemo } from "react";
-import { useRangeForVariable } from "../hooks/useRangeForVariable";
-import { flushSync } from "react-dom";
-import { getEstimatedTotalSize } from "../utils/variable/getEstimatedTotalSize";
-import { getItemMetadata } from "../utils/variable/getItemMetadata";
-
-const DEFAULT_ESTIMATED_SIZE = 50
+import { forwardRef, useState } from "react"
+import { flushSync } from "react-dom"
+import { VariableSizeListProps } from "../types/variable"
+import { useRangeForVariable } from "../hooks/useRangeForVariable"
 
 
-interface ItemMetadata {
-  /** */
-  size: number
-  /** */
-  offset: number
+interface Props extends VariableSizeListProps {
+  children:any
 }
 
-export interface InstanceProps {
-  /** */
-  estimatedItemSize: number
-  /** */
-  lastMeasuredIndex: number
-  /** */
-  itemMetadataMap: { [index:number]: ItemMetadata}
 
-}
-export interface VariableSizeListProps {
-  /** 预估条目高度 */
-  estimatedItemSize?: number
+const VariableSizeList = forwardRef((props: Props, ref)=> {
 
-  /**  */
-  height: number
-
-  /** */
-  itemCount: number
-  
-  children: any
-
-  itemSize: (index: number) => number
-}
-
-const VariableSizeList:React.FC<VariableSizeListProps> = (props) => {
-
-  const { estimatedItemSize, height, itemCount , children: Component} = props
-  const instanceProps: InstanceProps = useMemo(()=>{
-    return {
-      /** 记录每个条目的信息 */
-      itemMetadataMap: {},
-      /** 用来记录那条数据被渲染过了，计算过的可以直接用缓存的值 */
-      lastMeasuredIndex: -1,
-      estimatedItemSize: estimatedItemSize|| DEFAULT_ESTIMATED_SIZE
+  const { height, getItemHeight, itemCount, children: Component } = props 
+  //@ts-ignore
+  ref.current = {
+    resetHeight: () => {
+      setOffsets(genOffsets())
     }
-  },[estimatedItemSize])
-  
-  console.log({instanceProps})
+  }
 
+  /** 获取offsets */
+  const genOffsets = () => {
+    const a = [];
+    a[0] = getItemHeight(0);
+    for (let i = 1; i < itemCount; i++) {
+      a[i] = getItemHeight(i) + a[i - 1]
+    }
+    return a;
+  };
 
-  const {startIndex, endIndex, setScrollTop } = useRangeForVariable(props, instanceProps)
+  /** 存储offsets */
+  const [offsets, setOffsets] = useState(() => genOffsets())
 
+  /** 内容高度 */
+  const contentHeight = offsets[offsets.length - 1]
 
-  const contentHeight = useMemo(()=>{
-    return getEstimatedTotalSize(props, instanceProps)
-  },[instanceProps, props])
+  /** 获取起始和终点索引 */
+  const { startIndex , endIndex, setScrollTop } = useRangeForVariable({...props, offsets})
 
-    /** 需要渲染的items */
+  /** 需要渲染的items */
   const items = []
 
-    /** 列表长度大于0，对每一项进行处理 */
-    if(itemCount > 0){
-      for(let i = startIndex; i< endIndex; i++){
-        const {size:height, offset:top} = getItemMetadata(props, i, instanceProps)
-        items.push(
-          <Component 
-            key={i} 
-            index={i} 
-            style={{
-              top,
-              height,
-              left: 0,
-              width: '100%',
-              position: 'absolute',
-            }}
-          />)
-      }
+  /** 列表长度大于0，对每一项进行处理 */
+  if(itemCount > 0) {
+    for (let i = startIndex; i <= endIndex; i++) {
+      /** top为上一项offset的值 */
+      const top = i === 0 ? 0 : offsets[i - 1]
+      /** height为当前与上一项offset的差值 */
+      const height = i === 0 ? offsets[0] : offsets[i] - offsets[i - 1]
+      items.push(
+        <Component
+          key={i}
+          index={i}
+          style={{
+            top,
+            height,
+            width: '100%',
+            position: 'absolute',
+          }}
+        />
+      );
     }
-
+  }
 
 
   return (
-    <div 
+    <div
       style={{
         height,
-        overflow:'auto',
-        position:'relative',
-        // willChange: "transform",
+        overflow: 'auto',
+        position: 'relative'
       }}
-      onScroll={(e)=>{
-        flushSync(()=>{
+      onScroll={(e) => {
+        flushSync(() => {
           // @ts-ignore
-          setScrollTop(e.target.scrollTop)
-        })
+          setScrollTop(e.target.scrollTop);
+        });
       }}
     >
-      <div style={{ height: contentHeight }} >
-        {items}
-      </div>
+      <div style={{ height: contentHeight }}>{items}</div>
     </div>
   )
-}
+
+})
 
 export { VariableSizeList }

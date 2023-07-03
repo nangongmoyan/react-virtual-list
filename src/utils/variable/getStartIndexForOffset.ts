@@ -1,4 +1,4 @@
-import { InstanceProps ,VariableSizeListProps} from "../../components/VariableSizeList";
+import { InstanceProps ,VariableSizeListProps} from "../../components/VariableSizeList2";
 import { getItemMetadata } from "./getItemMetadata";
 export function getStartIndexForOffset (props: VariableSizeListProps, offset: number, instanceProps: InstanceProps){
 

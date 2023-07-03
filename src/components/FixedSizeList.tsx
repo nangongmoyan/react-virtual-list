@@ -1,18 +1,13 @@
 import React from "react";
 import { useRangeForFixed } from "../hooks/useRangeForFixed";
 import { flushSync } from "react-dom";
+import { FixedSizeListProps } from "../types/fixed";
 
-export interface FixedSizeListProps {
-  /** item尺寸*/
-  itemSize: number
-  /** 列表长度 */
-  itemCount: number
-  /** 高度 */
-  height: number
+export interface Props extends  FixedSizeListProps {
   children: any
 }
 
-const FixedSizeList:React.FC<FixedSizeListProps> = ({children: Component,...props}) => {
+const FixedSizeList:React.FC<Props> = ({children: Component,...props}) => {
 
   const {  itemCount, height, itemSize } = props
 
@@ -23,7 +18,9 @@ const FixedSizeList:React.FC<FixedSizeListProps> = ({children: Component,...prop
   /** 需要渲染的items */
   const items = []
 
+  /** 获取起始和终点索引 */
   const {startIndex, endIndex, setScrollTop } = useRangeForFixed(props)
+
   /** 列表长度大于0，对每一项进行处理 */
   if(itemCount > 0){
     for(let i = startIndex; i< endIndex; i++){
@@ -47,7 +44,6 @@ const FixedSizeList:React.FC<FixedSizeListProps> = ({children: Component,...prop
         height,
         overflow:'auto',
         position:'relative',
-        // willChange: "transform",
       }}
       onScroll={(e)=>{
         flushSync(()=>{
@@ -56,6 +52,7 @@ const FixedSizeList:React.FC<FixedSizeListProps> = ({children: Component,...prop
         })
       }}
     >
+      {/* contentHeight为内容高度 */}
       <div style={{ height: contentHeight }} >
         {items}
       </div>

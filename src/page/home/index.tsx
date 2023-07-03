@@ -19,7 +19,7 @@ const Home = () => {
         }}> 
         Fixed（固定高估） 
       </NavLink>
-      <NavLink 
+      {/* <NavLink 
         to="/fixedForWindow"    
         style={({ isActive, isPending }) => {
           return {
@@ -29,7 +29,7 @@ const Home = () => {
           };
         }}> 
         FixedForWindow（固定高估） 
-      </NavLink>
+      </NavLink> */}
     
       <NavLink 
         to="/variable"    
@@ -42,7 +42,7 @@ const Home = () => {
         }}> 
         Variable（动态高度）
       </NavLink>
-      <NavLink 
+      {/* <NavLink 
         to="/variable1"    
         style={({ isActive, isPending }) => {
           return {
@@ -52,8 +52,8 @@ const Home = () => {
           };
         }}> 
         VariablePage1（动态高度）
-      </NavLink>
-      <NavLink 
+      </NavLink> */}
+      {/* <NavLink 
         to="/variableForWindow"    
         style={({ isActive, isPending }) => {
           return {
@@ -63,7 +63,7 @@ const Home = () => {
           };
         }}> 
         VariableForWindow（动态高度）
-      </NavLink>
+      </NavLink> */}
     </header>
   </div>
   )

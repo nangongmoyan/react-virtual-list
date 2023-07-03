@@ -1,4 +1,4 @@
-import { InstanceProps, VariableSizeListProps } from "../../components/VariableSizeList";
+import { InstanceProps, VariableSizeListProps } from "../../components/VariableSizeList2";
 export function getEstimatedTotalSize (props: VariableSizeListProps, instanceProps:InstanceProps){
 
   /** 测量过的总高度 */

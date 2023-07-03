@@ -23,7 +23,8 @@ const Item:React.FC<Props> = ({index, data, setHeight })=>{
     <div
       ref={itemRef}
       style={{
-        backgroundColor: index % 2 === 0 ? 'burlywood' : 'cadetblue'
+        backgroundColor: index % 2 === 0 ? '#282c34' : '#087ea4',
+        color:'#FFF'
       }}
     >
       {data}

@@ -7,7 +7,8 @@ function Item({ style, index }:{style:React.CSSProperties, index:number}) {
       className="item"
       style={{
         ...style,
-        backgroundColor: index % 2 === 0 ? 'burlywood' : 'cadetblue'
+        backgroundColor: index % 2 === 0 ? '#282c34' : '#087ea4',
+        color:'#FFF',
       }}
     >
       {index}

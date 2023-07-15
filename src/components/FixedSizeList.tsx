@@ -44,6 +44,7 @@ const FixedSizeList:React.FC<Props> = ({children: Component,...props}) => {
         height,
         overflow:'auto',
         position:'relative',
+        willChange: "transform",
       }}
       onScroll={(e)=>{
         flushSync(()=>{

@@ -69,7 +69,8 @@ const VariableSizeList = forwardRef((props: Props, ref)=> {
       style={{
         height,
         overflow: 'auto',
-        position: 'relative'
+        position: 'relative',
+        willChange: "transform",
       }}
       onScroll={(e) => {
         flushSync(() => {
